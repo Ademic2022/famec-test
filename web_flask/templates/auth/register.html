@@ -1,0 +1,143 @@
+{% extends "auth/header.html" %}
+{% block title %}FAMEC/Register{% endblock %}
+{% block register %}
+<div class="ui raised very padded text segment" style="background-color: #ff91a4;">
+    <form class="ui form" style="width: 50%;" action="{{ url_for('auth.register') }}" method="POST">
+        <h2 class="ui dividing header centered">Register</h2>
+        {% with messages = get_flashed_messages(with_categories = true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              {% if category == 'error' %}
+                <div class="ui negative message">
+                  <i class="close icon"></i>
+                  <div class="header">
+                  {{ message }}
+                  </div>
+                </div>
+              {% else %}
+                <div class="ui success message">
+                  <i class="close icon"></i>
+                  <div class="header">
+                    {{ message }}
+                  </div>
+                  <p>You may now log-in with the username you have chosen</p>
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        <div class="field">
+          <label>Name</label>
+            <div class="two fields">
+                <div class="field">
+                <input type="text" name="firstname" placeholder="First Name" id="firstname" value="{% if user_data %}{{ user_data['firstname'] }}{% endif %}">
+                </div>
+                <div class="field">
+                <input type="text" name="lastname" placeholder="Last Name" id="lastname" value="{% if user_data %}{{ user_data['lastname'] }}{% endif %}">
+                </div>
+            </div>
+            <div class="field">
+                <label for="username">User Name</label>
+                <input type="text" name="username" placeholder="User Name" value="{% if user_data %}{{ user_data['username'] }}{% endif %}">
+            </div>
+            <div class="field">
+                <label>Password</label>
+                <div class="two fields">
+                  <div class="field">
+                    <input type="password" name="password" placeholder="password">
+                  </div>
+                  <div class="field">
+                    <input type="password" name="confirm_pass" placeholder="confirm password">
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>E-mail</label>
+            <input type="email" name="email" placeholder="joe@schmoe.com" value="{% if user_data %}{{ user_data['email'] }}{% endif %}">
+        </div>
+        <div class="field">
+          <label>Address</label>
+          <div class="fields">
+            <div class="twelve wide field">
+              <input type="text" name="address" placeholder="Street Address" value="{% if user_data %}{{ user_data['address'] }}{% endif %}">
+            </div>
+            <div class="four wide field">
+              <input type="text" name="zipcode" placeholder="zipcode" value="{% if user_data %}{{ user_data['zipcode'] }}{% endif %}">
+            </div>
+          </div>
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>Country</label>
+            <input type="text" name="country" placeholder="Apt #" id="country">
+          </div>
+          <div class="field">
+            <label>State</label>
+            <input type="text" name="state" placeholder="State" id="state">
+          </div> 
+        </div>
+        <h4 class="ui dividing header">Birthday</h4>
+        <div class="two fields">
+            <div class="field">
+              <select class="ui fluid search dropdown" name="birth_month">
+                <option value="">Month</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+              </select>
+            </div>
+            <div class="field">
+              <input type="text" name="birth_day" maxlength="4" placeholder="Day" value="{% if user_data %}{{ user_data['birth_day'] }}{% endif %}">
+            </div>
+        </div>
+        <h4 class="ui dividing header">Create or Join a Family</h4>
+        <div class="field">
+          <div class="ui slider checkbox">
+            <input type="radio" id="create_family" name="family_option" value="create" required>
+            <label for="create_family">Create a New Family</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui slider checkbox">
+            <input type="radio" id="join_family" name="family_option" value="join" required>
+            <label for="join_family">Join an Existing Family</label>
+          </div>
+        </div>
+        
+        <!-- Additional fields for creating a new family -->
+        <div class="field" id="new_family_fields" style="display: none;">
+          <label for="family_name">Family Name:</label>
+          <input type="text" id="family_name" name="family_name" placeholder="Family Name">
+        </div>
+
+        <!-- Additional fields for joining an existing family -->
+        <div class="field" id="existing_family_fields" style="display: none;">
+          <label for="family_id">Family ID:</label>
+          <input type="text" id="family_id" name="family_id" placeholder="Family ID">
+        </div>
+
+        <div class="ui segment">
+            <div class="field">
+                <div class="ui toggle checkbox">
+                    <input type="checkbox" name="t_c" tabindex="0" class="hidden">
+                    <label>Accept Terms and Condition</label>
+                </div>
+            </div>
+        </div>
+        <div class="ui message">
+            Already Registered? <a href="{{ url_for('auth.login') }}">Login</a>
+          </div>
+        <button name="register" class="positive ui button">Register</button>
+    </form>
+</div>
+{% endblock %}

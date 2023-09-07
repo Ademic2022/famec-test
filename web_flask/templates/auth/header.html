@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="{{url_for('static', filename='styles/login.css') }}"> -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
+        integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/header.css') }}">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <section id="header">
+        <h3>FAMEC</h3>
+    </section>
+
+    {% block login %}{% endblock %}
+    {% block register %}{% endblock %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
+    <script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+    <!-- custom javascript -->
+    <script src="{{ url_for('static', filename='scripts/header.js')  }}"></script>
+    <script src="{{ url_for('static', filename='scripts/register.js')  }}"></script>
+</body>
+</html>

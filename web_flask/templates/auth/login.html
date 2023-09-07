@@ -1,0 +1,53 @@
+{% extends "auth/header.html" %}
+{% block title %}FAMEC/Login{% endblock %}
+{% block login %}
+    <div class="container-box">
+        <div class="container">
+            <div class="form-box login">
+                <h3>Login</h3>
+                {% with messages = get_flashed_messages(with_categories = true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            {% if category == 'error' %}
+                                <div class="ui negative message">
+                                    <i class="close icon"></i>
+                                    <div class="header">
+                                    {{ message }}
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="ui success message">
+                                    <i class="close icon"></i>
+                                    <div class="header">
+                                    {{ message }}
+                                    </div>
+                                    <p>You may now log-in with the username you have chosen</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <form action="{{ url_for('auth.login') }}" method="POST">
+                    <div class="input-section">
+                        <span class="icon"><i class='bx bx-envelope'></i></span>
+                        <input type="email" name="email" required>
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-section">
+                        <span class="icon"><i class='bx bx-hide' id="toggleVisibility"></i></span>
+                        <input type="password" name="password" id="passwordInput" required>
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="form-footer">
+                        <label for=""><input type="checkbox"> Remember me</label>
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn">Login</button>
+                    <div class="login-register">
+                        <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

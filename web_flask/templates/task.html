@@ -1,0 +1,242 @@
+{% extends "base.html" %}{% block title %}Task{% endblock %}
+{% block section_contents %}
+{% block task_css %} <link rel="stylesheet" href="{{ url_for('static', filename='styles/task.css')  }}"> {% endblock %}
+    <div class="text">Tasks</div>
+{% endblock %}
+
+{% block page_contents %}
+<div class="ui top attached menu">
+    <div class="ui dropdown icon item">
+        <i class="list icon"></i>
+        <div class="menu">
+            <div class="item">
+            <span class="text" id="new_task">New Task</span>
+            </div>
+            <div class="item">
+                Sort By
+            </div>
+        </div>
+    </div>
+    <div class="right menu">
+      <div class="ui right aligned category search item">
+        <div class="ui transparent icon input">
+          <input class="prompt" type="text" placeholder="Search animals...">
+          <i class="search link icon"></i>
+        </div>
+        <div class="results"></div>
+      </div>
+    </div>
+</div>
+<div class="ui bottom attached segment">
+<!-- page Tables -->
+    <table class="ui sortable celled table">
+        <thead>
+            <tr>
+                <th>Task Title</th>
+                <th>Task Description</th>
+                <th>Date Created</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th style="width: 50px;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for task in family_tasks %}
+            {% if task and task.status == 0 %}
+            <tr>
+                <td data-label="title">{{ task.title }}</td>
+                <td data-label="description">{{ task.description }}</td>
+                <td data-label="date_created">{{ task.created_at }}</td>
+                <td data-label="due_date">{{ task.due_date }}</td>
+                <td data-label="status" 
+                class="{% if task.status == 0 %}
+                pending_color
+                {% else %}
+                success_color
+                {% endif %}">{% if task.status == 0 %}PENDING{% endif %}</td>
+                <td data-label="status">
+                    <div class="ui buttons">
+                        <button class="ui positive button active update-task-button" data-task-id="{{ task.id }}">Update</button>
+                        <button class="ui negative button delete-task-button" data-task-id="{{ task.id }}">Delete</button>
+                    </div>
+                </td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+        {% if user.tasks|length == 0 %}
+        <tr>
+            <td colspan="6">
+                No tasks available. <span class="text clickable" id="new_task"><a>Click here</a></span> to add a new task.
+            </td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+    <!-- completed table  -->
+
+    <table class="ui sortable celled table">
+        <thead>
+          <tr>
+            <th colspan="6">Completed Tasks</th>
+          </tr>
+        </thead>
+        <thead>
+            <tr>
+              <th>Task Title</th>
+              <th>Date Completed</th>
+              <th>Status</th>
+              <th style="width: 50px;">Action</th>
+            </tr>
+          </thead>
+        <tbody>
+            {% for task in family_tasks %}
+                {% if task and task.status == 1 %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.updated_at }}</td>
+                    <td 
+                        class="{% if task.status == 1 %}
+                        success_color
+                        {% endif %}">{% if task.status == 1 %}COMPLETED{% endif %}</td>
+                    <td data-label="status">
+                        <div class="ui buttons">
+                            <button class="ui positive button active update-task-button" data-task-id="{{ task.id }}">Update</button>
+                            <button class="ui negative button delete-task-button" data-task-id="{{ task.id }}">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+            {% if family_tasks|length == 0 %}
+            <tr>
+                <td colspan="6">
+                    No Completed task yet. <span class="text clickable" id="new_task"><a>Click here</a></span> to add a new task.
+                </td>
+            </tr>
+            {% endif %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="6">
+                    <div class="ui right floated pagination menu">
+                        <a class="icon item">
+                        <i class="left chevron icon"></i>
+                        </a>
+                        <a class="item">1</a>
+                        <a class="item">2</a>
+                        <a class="item">3</a>
+                        <a class="item">4</a>
+                        <a class="icon item">
+                        <i class="right chevron icon"></i>
+                        </a>
+                    </div>
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+<!-- Page modals  create Task-->
+<div class="ui modal new_task">
+    <div class="header">Add New Task</div>
+    <div class="content">
+        <form class="ui form" method="POST" action="{{ url_for('views.tasks') }}">
+            <div class="field">
+                <label>Task Title</label>
+                <input type="text" name="task_title" placeholder="Task Title...">
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea rows="2" style="height: 56px;" name="description"></textarea>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Priority</label>
+                    <select class="ui fluid search dropdown" name="priority">
+                        <option value="">Priority</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Due Date</label>
+                    <input placeholder="Due Date" name="due_date" type="date">
+                </div>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="ui positive button" type="submit">Create Task</button>
+            <div class="ui negative button">Cancel</div>
+        </div>
+    </form>
+</div>
+<!-- Delete modal -->
+<div class="ui mini delete_modal modal">
+    <div class="header">Delete This Task</div>
+    <div class="content">
+        <p>Are you sure you want to delete this task?</p>
+    </div>
+    <div class="actions">
+        <div class="ui deny button">
+            Cancel
+        </div>
+        <div class="ui negative right labeled icon button" id="confirmDeleteButton">
+            Delete
+            <i class="trash alternate icon"></i>
+        </div>
+    </div>
+    <!-- Hidden input field for taskId -->
+    <input type="hidden" id="taskIdInput" value="">
+</div>
+
+<!-- Page modals  Update Task-->
+<div class="ui modal update_task">
+    <div class="header">Update Task</div>
+    <div class="content">
+        <form class="ui form" action="{{ url_for('views.tasks') }}">
+            <input type="text" name="task_id" hidden>
+            <div class="field">
+                <label>Task Title</label>
+                <input type="text" name="task_title" placeholder="Task Title...">
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea rows="2" style="height: 56px;" name="description"></textarea>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Priority</label>
+                    <select class="ui fluid search dropdown" name="priority">
+                        <option value="">Priority</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Due Date</label>
+                    <input placeholder="Due Date" name="due_date" type="date">
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui toggle checkbox">
+                  <input type="checkbox" name="status" tabindex="0" class="hidden">
+                  <label>Task Completed</label>
+                </div>
+            </div>
+        <!-- </form> -->
+    </div>
+        <div class="actions">
+            <button class="ui positive button" type="submit">Update Task</button>
+            <div class="ui negative button">Cancel</div>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
+{% block task_script %}
+    <script src="{{ url_for('static', filename='scripts/task.js')  }}"></script>
+{% endblock %}

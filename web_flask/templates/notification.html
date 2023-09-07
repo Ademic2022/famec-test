@@ -1,0 +1,33 @@
+{% extends "base.html" %}{% block title %}Notifications{% endblock %}
+{% block section_contents %}
+    <div class="text">Notifications</div>
+{% endblock %}
+{% block page_contents %}
+  <!-- Page Contents -->
+    <div class="ui fluid padded container segment">
+        <h3 class="dividing">Recent Notifications</h3>
+        {% if notifications %}
+            {% for notification in notifications %}
+                <div class="ui comments">
+                    <div class="comment">
+                        <a class="avatar">
+                            <img src="{{ profile_image[0] }}">
+                        </a>
+                        <div class="content">
+                            <a class="author" href="{{ url_for('views.tasks') }}">{{ notification.sender.firstname|capitalize }} {{ notification.sender.lastname|capitalize }}</a>
+                            <div class="metadata">
+                            <div class="date">{{ notification.created_at }}</div>
+                            </div>
+                            <div class="text">
+                                {{ notification.content }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+        <p>No available notification</p>
+        {% endif %}
+        
+    </div>
+{% endblock %}

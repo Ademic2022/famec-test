@@ -1,0 +1,16 @@
+.ui.top.attached.menu {
+    margin-top: 10px;
+}
+
+td.pending_color {
+    background-color: #ff5d5d;
+    color: #000;
+}
+td.warning_color {
+    background-color: #fffc5d;
+    color: #000;
+}
+td.success_color {
+    background-color: #5dff65;
+    color: #000;
+}

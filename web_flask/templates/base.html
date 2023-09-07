@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/base.css')  }}">
+    {% block task_css %}{% endblock %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
+        integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />    
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <title>{% block title %}Base{% endblock %}</title>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo_details">
+            <i class="bx bxl-audible zone"></i>
+            <div class="logo_name">FAMEC</div>
+            <i class="bx bx-menu" id="btn"></i>
+        </div>
+        <ul class="nav-list">
+            <li>
+                <i class="bx bx-search"></i>
+                <input type="text" placeholder="Search...">
+                <span class="tooltip">Search</span>
+            </li>
+            <li>
+                <a href="{{ url_for('views.dashboard') }}">
+                    <i class="bx bx-grid-alt"></i>
+                    <span class="link_name">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li>
+            <li>
+                <a href="{{ url_for('views.users') }}">
+                    <i class="bx bx-user"></i>
+                    <span class="link_name">User</span>
+                </a>
+                <span class="tooltip">User</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="bx bx-chat"></i>
+                    <span class="link_name">Notes</span>
+                </a>
+                <span class="tooltip">Notes</span>
+            </li>
+            <li>
+                <a href="{{ url_for('views.tasks') }}">
+                    <i class='bx bx-task'></i>
+                    <span class="link_name">Tasks</span>
+                </a>
+                <span class="tooltip">Tasks</span>
+            </li>
+            <li>
+                <a href="{{ url_for('views.notification') }}">
+                    <i class='bx bx-bell' ></i>
+                    <span class="link_name">Notification</span>
+                </a>
+                <span class="tooltip">Notification</span>
+            </li>
+            <li>
+                <a href="{{ url_for('views.events') }}">
+                    <i class='bx bx-calendar-event'></i>
+                    <span class="link_name">Event</span>
+                </a>
+                <span class="tooltip">Event</span>
+            </li>
+            <li>
+                <a href="{{ url_for('views.family') }}">
+                    <i class='bx bx-group' ></i>
+                    <span class="link_name">Family</span>
+                </a>
+                <span class="tooltip">Family</span>
+            </li>
+            <li>
+                <a href="{{ url_for('views.settings') }}">
+                    <i class="bx bx-cog"></i>
+                    <span class="link_name">Settings</span>
+                </a>
+                <span class="tooltip">Setting</span>
+            </li>
+            <li class="profile">
+                <div class="profile_details">
+                    <img src="{{ url_for('static', filename='images/avatar.png') }}" alt="profile image">
+                    <div class="profile_content">
+                        <div class="name">
+                            {% if user.is_authenticated %}
+                                {{ user.username }}
+                            {% endif %}
+                        </div>
+                        <div class="designation">Admin</div>
+                    </div>
+                </div>
+                <!-- <i class="bx bx-log-out" id="log_out"></i> -->
+                <a class="" href="{{ url_for('auth.logout') }} "id='log_out' >
+                    <i class="bx bx-log-out" id="log_out"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <section class="home-section">
+        <div class="ui inverted segment">
+            {% block section_contents %}{% endblock %}
+                {% with messages = get_flashed_messages(with_categories = true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            {% if category == 'success' %}
+                                <div class="ui success message">
+                                    <i class="close icon"></i>
+                                    <div class="header">
+                                    {{ message }}
+                                    </div>
+                                    <!-- <p>You may now log-in with the username you have chosen</p> -->
+                                </div>
+                            {% else %}
+                                <div class="ui negative message">
+                                    <i class="close icon"></i>
+                                    <div class="header">
+                                    {{ message }}
+                                    </div>
+                                    <!-- <p>That offer has expired</p> -->
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            <div class="ui right floated floating dropdown labeled icon button">
+                <div class="floated">
+                    <img class="ui avatar image" src="{{ url_for('static', filename='images/avatar.png')  }}">
+                    {% if user.is_authenticated %}
+                        {{ user.firstname }}
+                    {% endif %}
+                </div>
+                <div class="scrolling menu">
+                  <div class="header">
+                    Navigation Menu
+                  </div>
+                  <div class="scrolling menu">
+                    <a class="item" href="{{ url_for('views.notification') }}">
+                        <i class="icon mail"></i> Notification
+                    </a>
+                    <a class="item" href="{{ url_for('views.settings') }}">
+                        <i class="icon setting"></i> Settings
+                    </a>
+                    <a class="item" href="{{ url_for('auth.logout') }}">
+                        <i class="icon logout"></i> Logout
+                    </a>
+                  </div>
+                </div>
+            </div>
+            <div class="ui right floated compact menu">
+                <a class="item" href="{{ url_for('views.notification') }}">
+                  <i class="icon mail"></i> Notification
+                  <div class="floating ui circular red label">{{ notification_counter }}</div>
+                </a>
+                <a class="item"  href="{{ url_for('views.tasks') }}">
+                    <i class='bx bx-task'></i> Tasks
+                    <div class="floating ui circular teal label">{{ task_counter }}</div>
+                </a> 
+            </div>
+        </div>
+    </section>
+    <section class="page-contents-section">
+        <div class="ui fluid container">
+            {% block page_contents %}{% endblock %}
+        </div>
+    </section>
+    <div class="ui inverted vertical footer segment">
+        <div class="ui container very padded basic segment">
+        <div class="ui stackable inverted divided equal height stackable grid">
+            <div class="three wide column">
+            <h4 class="ui inverted header">About</h4>
+            <div class="ui inverted link list">
+                <a href="{{ url_for('views.landing_page') }}" class="item">Contact Us</a>
+            </div>
+            </div>
+            <div class="three wide column">
+            <h4 class="ui inverted header">Services</h4>
+            <div class="ui inverted link list">
+                <a href="#" class="item">Blog</a>
+                <a href="#" class="item">Famec FAQ</a>
+                <a href="#" class="item">Emergency Contact</a>
+            </div>
+            </div>
+            <div class="seven wide column">
+            <h4 class="ui inverted header">Footer Header</h4>
+            <p class="ui inverted grey text">Copyright © 2023 Your Company Name. All rights reserved.</p>
+            </div>
+        </div><br>
+        <p style="text-align: center;"><strong style="color: #fff;">FAMEC © 2023. All rights reserved.</strong></p>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/base.js')  }}"></script>
+    {% block task_script %}{% endblock %}
+    {% block settings_script %}{% endblock %}
+</body>
+</html>

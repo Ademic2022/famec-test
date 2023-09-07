@@ -1,0 +1,257 @@
+:root{
+    --color-default:#ff007f;
+    --color-second:#ff91a4;
+    --color-white:#fff;
+    --color-body:#e4e9f7;
+    --color-light:#e0e0e0;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+body{
+    font-family: "Poppins", sans-serif;
+    min-height: 100vh;
+}
+p, h1, h3, h4, span, a, button, .logo{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif ;
+}
+/* 
+======================================================================================
+LOGIN AND REGISTRATION CASCADING
+======================================================================================
+*/
+
+.container-box{
+    position: fixed;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    padding-top: 100px;
+    top: 0;
+    left:0;
+    background-color: var(--color-second);
+    transition: 3s ease-in-out;
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 440px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .5);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    margin: 0 auto;
+    animation: zoomIn 1s ease forwards;
+}
+.container .form-box{
+    width: 100%;
+    padding: 40px;
+}
+.form-box h2{
+    font-size: 2em;
+    color: #fff;
+    text-align: center;
+}
+.input-section{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid #fff;
+    margin: 30px 0;
+}
+.input-section input:focus~label, .input-section input:valid~label{
+    top: -5px;
+}
+.input-section label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1em;
+    color: #fff;
+    font-weight: 500;
+    pointer-events: none;
+    transition: .5s;
+}
+.input-section input{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    color: #fff;
+    font-weight: 600;
+    padding: 0 35px 0 5px;
+}
+.input-section .icon{
+    position: absolute;
+    right: 8px;
+    font-size: 1.2em;
+    color: #fff;
+    line-height: 57px;
+}
+.form-footer{
+    font-size: .9em;
+    color: #162938;
+    font-weight: 500;
+    margin: -15px 0 15px;
+    display: flex;
+    justify-content: space-between;
+}
+.form-footer label input{
+    accent-color: #162938;
+    margin-right: 3px;
+}
+.form-footer a{
+    color: #162938;
+    text-decoration: none;
+}
+.form-footer a:hover{
+    text-decoration: underline;
+}
+.btn{
+    width: 100%;
+    height: 45px;
+    background: #162938;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #fff;
+}
+.login-register{
+    font-size: .9em;
+    color: #162938;
+    text-align: center;
+    font-weight: 500;
+    margin: 25px 0 10px;
+}
+.login-register p a{
+    color: #162938;
+    text-decoration: none;
+}
+.login-register a:hover{
+    text-decoration: underline;
+}
+
+/* 
+======================================================================================
+END OF LOGIN AND REGISTRATION CASCADING
+======================================================================================
+*/
+/* 
+======================================================================================
+Keyframe Animations
+======================================================================================
+*/
+
+@keyframes slideRight {
+    0%{
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes slideLeft {
+    0%{
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes slideTop {
+    0%{
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+@keyframes slideBottom {
+    0%{
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+@keyframes zoomIn {
+    0%{
+        transform: scale(0);
+        opacity: 0;
+    }
+    100%{
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+@keyframes floatImage {
+    0%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(-24px);
+    }
+    100%{
+        transform: translateY(0);
+    }
+}
+
+/* SKILLBAR ANIMATION */
+
+@keyframes html {
+    100%{
+        width: 86%;
+    }
+}
+@keyframes css {
+    100%{
+        width: 75%;
+    }
+}
+@keyframes javascript {
+    100%{
+        width: 82%;
+    }
+}
+@keyframes python {
+    100%{
+        width: 88%;
+    }
+}
+@keyframes mysql {
+    100%{
+        width: 70%;
+    }
+}
+@keyframes scrollDownAnimation {
+    0% {
+      opacity: 1;
+      transform: translate(-50%, -50%) translateY(-10px);
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -50%) translateY(10px);
+    }
+  }

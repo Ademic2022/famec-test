@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block title %}Family{% endblock %}
+{% block section_contents %}
+    <div class="text">Family Members</div>
+{% endblock %}
+{% block page_contents %}
+  <!-- Page Contents -->
+    <div class="ui fluid padded container segment">
+        {% for family in families %}
+        <div class="ui list">
+            <div class="item">
+              <img class="ui avatar image" src="{{ image[0] }}">
+              <div class="content">
+                <a class="header">{{ family.firstname }} {{family.lastname}}</a>
+                <div class="description">Last seen watching <a><b>Arrested Development</b></a> just now.</div>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

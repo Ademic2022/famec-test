@@ -1,0 +1,88 @@
+{% extends "base.html" %}{% block title %}Settings{% endblock %}
+{% block section_contents %}
+    <div class="text">Profile Settings</div>
+{% endblock %}
+
+{% block page_contents %}
+  <!-- Page Contents -->
+  <div class="ui fluid container segment">
+    <h2 class="ui dividing header">Family Information</h2>
+    <form class="ui form">
+        <div class="field">
+            <label>Family Name</label>
+            <input type="text" name="shipping[first-name]" value="{{ family.name }}">
+        </div>
+        <div class="field">
+            <label>Family ID</label>
+            <input type="text" name="shipping[first-name]" value="{{ family.owner_id }}" readonly>
+        </div>
+    </form>
+    <h2 class="ui header">User Information</h2>
+    <h4 class="ui header">Profile image</h4>
+    <div class="ui special cards">
+        <div class="card">
+            <div class="blurring dimmable image">
+                <div class="ui dimmer">
+                <div class="content">
+                    <div class="center">
+                    <div class="ui inverted button">Update Image</div>
+                    </div>
+                </div>
+                </div>
+                <img src="{{ image[0] }}">
+            </div>
+            <div class="content">
+                <a class="header">Team Fu</a>
+                <div class="meta">
+                <span class="date">Joined in Sep 2014</span>
+                </div>
+            </div>
+            <div class="extra content">
+                <a>
+                <i class="users icon"></i>
+                2 Members
+                </a>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <form class="ui form">
+        <div class="field">
+            <label>Name</label>
+            <div class="two fields">
+                <div class="field">
+                <input type="text" name="shipping[first-name]" placeholder="First Name" value="{{ user.firstname }}">
+                </div>
+                <div class="field">
+                <input type="text" name="shipping[last-name]" placeholder="Last Name" value="{{ user.lastname }}">
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Address</label>
+            <div class="fields">
+                <div class="twelve wide field">
+                <input type="text" name="shipping[address]" placeholder="Street Address" value="{{ user.address }}">
+                </div>
+                <div class="four wide field">
+                <input type="text" name="shipping[address-2]" placeholder="Apt #">
+                </div>
+            </div>
+        </div>
+        <div class="two fields">
+            <div class="field">
+                <label>State</label>
+                <input type="text" name="shipping[last-name]" placeholder="State" value="{{ user.state }}">
+            </div>
+            <div class="field">
+                <label>Country</label>
+                <input type="text" name="shipping[last-name]" placeholder="Country" value="{{ user.country }}">
+            </div>
+        </div>
+        <div class="ui button" tabindex="0">Submit Changes</div>
+    </form>
+  </div>
+{% endblock %}
+{% block settings_script %}
+    <script src="{{ url_for('static', filename='scripts/settings.js')  }}"></script>
+{% endblock %}
