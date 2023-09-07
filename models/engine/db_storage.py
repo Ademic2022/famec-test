@@ -14,14 +14,14 @@ class DBStorage:
         self.__create_session()  # Initialize the session
 
     def __setup_engine(self):
-        user = getenv('FAMEC_MYSQL_USER')
-        db_password = getenv('FAMEC_MYSQL_PWD')
-        database = getenv('FAMEC_MYSQL_DB')
-        host = getenv('FAMEC_MYSQL_HOST')
+        # user = getenv('FAMEC_MYSQL_USER')
+        # db_password = getenv('FAMEC_MYSQL_PWD')
+        # database = getenv('FAMEC_MYSQL_DB')
+        # host = getenv('FAMEC_MYSQL_HOST')
         env = getenv('FAMEC_ENV')
 
         self.__engine = create_engine(
-            f'mysql+mysqldb://{user}:{db_password}@{host}/{database}',
+            f'mysql://ud6sirijm7wdl4f2:Xs9ZWyCFUdBM9txRCaCV@bgxgrxrrto5z8iklihyz-mysql.services.clever-cloud.com:3306/bgxgrxrrto5z8iklihyz',
             pool_pre_ping=True
         )
 
