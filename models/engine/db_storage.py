@@ -99,14 +99,10 @@ class DBStorage:
         module = importlib.import_module('models.' + class_name.lower())
         # Get the class from the module
         cls = getattr(module, class_name)
-
         session = self.__create_session()
         query = session.query(cls).filter_by(family_id=id).all()
-        
         count = len(query)  # count the objects in the list
         return count
-
-
 
     def find_user_by_email(self, email):
         from models.user import User
