@@ -21,7 +21,7 @@ class DBStorage:
         env = getenv('FAMEC_ENV')
 
         self.__engine = create_engine(
-            f'mysql+mysqldb://{user}:{db_password}@{host}/{database}',
+            f'mysql://ud6sirijm7wdl4f2:Xs9ZWyCFUdBM9txRCaCV@bgxgrxrrto5z8iklihyz-mysql.services.clever-cloud.com:3306/bgxgrxrrto5z8iklihyz',
             pool_pre_ping=True
         )
 
@@ -98,8 +98,7 @@ class DBStorage:
         # Get the class from the module
         cls = getattr(module, class_name)
         session = self.__create_session()
-        query = session.query(cls).filter_by(family_id=id).all()
-        
+        query = session.query(cls).filter_by(family_id=id, status=0).all()
         count = len(query)  # count the objects in the list
         return count
 
