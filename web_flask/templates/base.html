@@ -82,7 +82,7 @@
             </li>
             <li class="profile">
                 <div class="profile_details">
-                    <img src="{{ url_for('static', filename='images/avatar.png') }}" alt="profile image">
+                    <img class="ui avatar image" style="height: 40px !important; width: 40px !important;" src="{{ url_for('static', filename='uploads/' + profile_image) }}" alt="profile image">
                     <div class="profile_content">
                         <div class="name">
                             {% if user.is_authenticated %}
@@ -127,7 +127,7 @@
                 {% endwith %}
             <div class="ui right floated floating dropdown labeled icon button">
                 <div class="floated">
-                    <img class="ui avatar image" src="{{ url_for('static', filename='images/avatar.png')  }}">
+                    <img class="ui avatar image" src="{{ url_for('static', filename='uploads/' + profile_image) }}">
                     {% if user.is_authenticated %}
                         {{ user.firstname }}
                     {% endif %}
@@ -151,12 +151,18 @@
             </div>
             <div class="ui right floated compact menu">
                 <a class="item" href="{{ url_for('views.notification') }}">
-                  <i class="icon mail"></i> Notification
-                  <div class="floating ui circular red label">{{ notification_counter }}</div>
+                    <i class="icon mail"></i> Notifications
+                    <!-- <div class="floating ui circular red label">{{ notification_counter }}</div> -->
+                    {% if notification_counter > 0 %}
+                    <div class="floating ui circular red label">{{ notification_counter }}</div>
+                    {% endif %}
                 </a>
                 <a class="item"  href="{{ url_for('views.tasks') }}">
                     <i class='bx bx-task'></i> Tasks
+                    <!-- <div class="floating ui circular teal label">{{ task_counter }}</div> -->
+                    {% if task_counter > 0 %}
                     <div class="floating ui circular teal label">{{ task_counter }}</div>
+                    {% endif %}
                 </a> 
             </div>
         </div>

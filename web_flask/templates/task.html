@@ -34,6 +34,7 @@
             <tr>
                 <th>Task Title</th>
                 <th>Task Description</th>
+                <th>Created By</th>
                 <th>Date Created</th>
                 <th>Due Date</th>
                 <th>Status</th>
@@ -46,7 +47,10 @@
             <tr>
                 <td data-label="title">{{ task.title }}</td>
                 <td data-label="description">{{ task.description }}</td>
-                <td data-label="date_created">{{ task.created_at }}</td>
+                <td data-label="description">
+                    {% if current_user.username == task.user.username %}You{% else %}{{ task.user.username|capitalize }}{% endif %}
+                </td>
+                <td data-label="date_created">{{ task.created_at.strftime('%b %d, %Y at %H:%M') }}</td>
                 <td data-label="due_date">{{ task.due_date }}</td>
                 <td data-label="status" 
                 class="{% if task.status == 0 %}
@@ -94,7 +98,7 @@
                 {% if task and task.status == 1 %}
                 <tr>
                     <td>{{ task.title }}</td>
-                    <td>{{ task.updated_at }}</td>
+                    <td>{{ task.updated_at.strftime('%b %d, %Y at %H:%M') }}</td>
                     <td 
                         class="{% if task.status == 1 %}
                         success_color
@@ -142,9 +146,27 @@
     <div class="header">Add New Task</div>
     <div class="content">
         <form class="ui form" method="POST" action="{{ url_for('views.tasks') }}">
-            <div class="field">
-                <label>Task Title</label>
-                <input type="text" name="task_title" placeholder="Task Title...">
+            <div class="two fields">
+                <div class="field">
+                    <label>Task Title</label>
+                    <input type="text" name="task_title" placeholder="Task Title...">
+                </div>
+                <div class="field">
+                    <label>Assign to:</label>
+                    <div class="ui fluid multiple search selection dropdown">
+                        <input type="hidden" name="assigned_to">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Saved Contacts</div>
+                        <div class="menu">
+                            {% for family in current_user.family.members %}
+                                <div class="item" data-value="{{ family.username }}" data-text="{{ family.username }}">
+                                    <img class="ui mini avatar image" src="/images/avatar/small/jenny.jpg">
+                                    {{ family.username|capitalize }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="field">
                 <label>Description</label>
@@ -197,9 +219,27 @@
     <div class="content">
         <form class="ui form" action="{{ url_for('views.tasks') }}">
             <input type="text" name="task_id" hidden>
-            <div class="field">
-                <label>Task Title</label>
-                <input type="text" name="task_title" placeholder="Task Title...">
+            <div class="two fields">
+                <div class="field">
+                    <label>Task Title</label>
+                    <input type="text" name="task_title" placeholder="Task Title...">
+                </div>
+                <div class="field">
+                    <label>Assign to:</label>
+                    <div class="ui fluid multiple search selection dropdown">
+                        <input type="hidden" name="assigned_to">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Saved Contacts</div>
+                        <div class="menu">
+                            {% for family in current_user.family.members %}
+                                <div class="item" data-value="{{ family.username }}" data-text="{{ family.username }}">
+                                    <img class="ui mini avatar image" src="/images/avatar/small/jenny.jpg">
+                                    {{ family.username|capitalize }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="field">
                 <label>Description</label>

@@ -141,7 +141,6 @@ def register():
                     )
 
                     # Query the database to get the selected family
-                    # selected_family = Family.query.get(family_id)
                     selected_family = storage.get_family_by_id(family_id)
                     if selected_family:
                         

@@ -2,7 +2,7 @@ from flask import Flask
 from flask_login import LoginManager
 from datetime import timedelta
 from models import storage
-
+# from flask_uploads import configure_uploads, UploadSet, IMAGES
 
 def create_app():
     app = Flask(__name__)
@@ -10,6 +10,10 @@ def create_app():
     app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(seconds=3600)  # Set session timeout to 1 hour
     app.config['REMEMBER_COOKIE_DURATION'] = timedelta(seconds=3600)  # Set the duration you want here
 
+    # Configure Flask-Uploads
+    app.config['UPLOADED_PHOTOS_DEST'] = 'web_flask/static/uploads/'  # Set the upload folder
+    app.config['UPLOADS_DEFAULT_DEST'] = 'web_flask/static/uploads/'  # Set the default destination
+    app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
     from .views import views
     from .auth import auth
 
@@ -22,7 +26,8 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(id):
-        return storage.find_user_by_id(id)
+        user = storage.find_user_by_id(id)
+        return user
 
     # Define the custom filter function
     def enum_to_string(enum_value):

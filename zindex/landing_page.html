@@ -14,7 +14,7 @@
     <section id="home">
         <header id="header" >
             <a class="nav-btn" href="#home">
-                <div class="logo"><img src="{{ url_for('static', filename='images/Famec_logo_white.png')  }}" alt=""></div>
+                <div class="logo"><img src="{{  images[4] }}" alt=""></div>
             </a>
             <nav class="navigation">
                 <ul>
@@ -135,8 +135,7 @@
             </div>
         </div>
         <div class="owl-carousel owl-theme">
-            <!-- <div class="section-content" style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('');"> -->
-            <div class="section-content">
+            <div class="section-content" style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('{{ images[0] }}');">
                 <div class="slide-1"></div>
                 <div class="section-article">
                     <h1>Master Your Home, Reclaim Your Time with Famec</h1>
@@ -148,16 +147,14 @@
                     <a href="#about"><button>Learn</button></a>
                 </div>
             </div>
-            <!-- <div class="section-content" style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('');"> -->
-            <div class="section-content">
+            <div class="section-content" style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('{{ images[1] }}');">
                 <div class="section-article">
                     <h1>Let us plan your home</h1>
                     <p><strong>Effortlessly Delegate Chores:</strong> Assign tasks to family members with just a few taps, ensuring that everyone contributes to a clean and tidy home.</p>
                     <a href="{{ url_for('auth.register') }}"><button type="submit">Join FAMEC</button></a>
                 </div>
             </div>
-            <!-- <div class="section-content" style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('');"> -->
-            <div class="section-content">
+            <div class="section-content" style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('{{ images[0] }}');">
                 <div class="section-article">
                     <h1>learn about us</h1>
                     <p>Discover how Famec can transform your daily routine.</p>
@@ -167,141 +164,81 @@
         </div>
     </section>
     <section id="about">
-        <div class="about-famec">
-            <div class="famec-introduction">
-                <h2>Introducing Famec:Your Home Management Companion for Moms</h2>
-                <div class="famec-intro-contents">
-                    <div class="image-container">
-                        <img src="{{ url_for('static', filename='images/part.png')}}" alt="happy mom">
-                    </div>
-                    <div class="text-container">
-                        <h4>Empowering Moms to Make Time for What Matters</h4>
-                        <p>
-                            Life as a mom is a beautiful journey, but it can also be overwhelming. Balancing household chores, 
-                            managing family events and finding time for yourself can be challenging. That's where FAMEC comes in. 
-                        </p>
-                    </div>
-                </div>
-                <!-- <h2>Introducing Famec:Your Home Management Companion for Moms</h2> -->
-                <div class="famec-intro-contents">
-                    <div class="text-container">
-                        <p>
-                            <strong>FAMEC: </strong>Life as a mom is a beautiful journey, but it can also be overwhelming. Balancing household chores, 
-                            managing family events and finding time for yourself can be challenging. That's where FAMEC comes in. 
-                        </p>
-                        <h4>With FAMEC you can:</h4>
-                        <p>
-                            Effortless Delegate Chores
-                            <ul>
-                                <li>
-                                    Assign tasks to the family members with just a few taps, ensure that everyone contribute to a clean and tidy home.
-                                </li>
-                            </ul>
-                        </p>
-                        <p>
-                            Stay on Top of Family Events:
-                            <ul>
-                                <li>
-                                    Our Integrated calendars keeps you informed about important dates, appointments 
-                                    and gatherings, so you can plan ahead.
-                                </li>
-                            </ul>
-                        </p>
-                    </div>
-                    <div class="image-container">
-                        <img src="{{ url_for('static', filename='images/part1.png')}}" alt="happy mom">
-                    </div>
+        <div class="about-container">
+            <div class="about-sections">
+                <!-- <h1>about</h1> -->
+            </div>
+            <div class="about-sections">
+                <div class="about-hma" style="background: url('{{ images[3] }}');"></div>
+                <!-- <div class="about-hma">
+                    <h2>FAMEC in Action</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia velit 
+                        facere vel consequatur ipsa, quia, provident omnis porro reprehenderit 
+                        voluptatem alias in earum natus impedit, sed atque culpa optio corrupti ratione 
+                        fugiat quam ex. Sit atque illo qui officiis nam soluta iure similique assumenda quam 
+                        voluptatum reprehenderit expedita nesciunt illum aperiam dolores debitis nobis 
+                        sunt, aliquam, perspiciatis labore, nemo veniam.
+                    </p>
+                </div> -->
+            </div>
+            <div class="about-sections">
+                <div class="about-sections-contents animate">
+                    <h4>Michael .B. Adeeyo</h4>
+                    <p>
+                        I'm a software engineer at Famec, merging technology with design. 
+                        With coding expertise and an eye for aesthetics, 
+                        I create innovative, user-friendly solutions. Collaboration is key, and I enjoy pushing boundaries with colleagues.
+                        Whether enhancing software, refining interfaces, or architecting systems, excellence is my goal. 
+                        Beyond code, I stay updated on tech trends and enjoy side projects. 
+                        I believe the finest software combines tech mastery, user-focused design, and a passion for innovation. 
+                        As part of Famec, I'm excited to shape the digital design future, pixel by pixel.
+                    </p>
                 </div>
             </div>
-            <div class="why-famec">
-                <div class="why-famec-logo">
-                    <img src="{{ url_for('static', filename='images/Famec_logo_white.png')}}" alt="logo">
-                </div>
-                <div class="why-famec-contents">
-                    <h2>why famec</h2>
-                    <p>Effortless House Chore Management</p>
-                    <ul>
-                        <li>
-                            Famec simplifies your daily chores, plan organize and assign tasks to family members with ease.
-                            No more stress a out who does what, it's all under control.
-                        </li>
-                    </ul>
-                    <p>Seamless calender integration</p>
-                    <ul>
-                        <li>
-                            Keep track of family events, appointments, and important dates effortlessly.
-                            Famec Calender feature ensures you are never double booked again
-                        </li>
-                    </ul>
-                </div>
-                <div class="why-famec-contents">
-                    <div class="why-famec-placeholders">
-                        <img src="{{ url_for('static', filename='images/new-task.png')}}" alt="famec placeholder">
-                    </div>
-                    <div class="why-famec-placeholders">
-                        <img src="{{ url_for('static', filename='images/task-boards.png')}}" alt="famec placeholder">
-                    </div>
+            <div class="about-sections">
+                <div class="about-sections-contents animate">
+                    <h4>Fatimah .k. Hassan</h4>
+                    <p>
+                        I'm Fatimah Hassan, a software developer and member of the Famec design team.
+                        With a deep passion for technology and relentless curiosity,
+                        I thrive on learning and innovation. Being part of Famec allows me to blend my technical skills with creativity, 
+                        creating user-centric solutions for moms. As a tech enthusiast, 
+                        I stay updated with the latest trends and promise to deliver software that not only functions impeccably but also delights users with its design.
+                        Let's connect and explore the endless possibilities of technology together. 
+                    </p>
                 </div>
             </div>
-            <div class="famec-dashboard-display">   
-                <div class="famec-dashboard-content">
-                    <div class="dashboard-img">
-                        <img src="{{ url_for('static', filename='images/dashboard.png')}}" alt="">
-                        <div class="form">
-                            <h1>Get Started With FAMEC</h1>
-                            <input type="text" placeholder="Enter your Email...">
-                            <a href="{{ url_for('auth.register') }}"><button type="submit">Register Here</button></a>
-                        </div>
-                    </div>
-                </div>
-                <h2>Authors</h2>
-                <div class="about-container">
-                    <div class="about-sections">
-                        <div class="about-sections-contents animate">
-                            <h4>Michael .B. Adeeyo</h4>
-                            <p>
-                                I'm a software engineer at Famec, merging technology with design. 
-                                With coding expertise and an eye for aesthetics, 
-                                I create innovative, user-friendly solutions. Collaboration is key, and I enjoy pushing boundaries with colleagues.
-                                Whether enhancing software, refining interfaces, or architecting systems, excellence is my goal. 
-                                Beyond code, I stay updated on tech trends and enjoy side projects. 
-                                I believe the finest software combines tech mastery, user-focused design, and a passion for innovation. 
-                                As part of Famec, I'm excited to shape the digital design future, pixel by pixel.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="about-sections">
-                        <div class="about-sections-contents animate">
-                            <h4>Fatimah .k. Hassan</h4>
-                            <p>
-                                I'm Fatimah Hassan, a software developer and member of the Famec design team.
-                                With a deep passion for technology and relentless curiosity,
-                                I thrive on learning and innovation. Being part of Famec allows me to blend my technical skills with creativity, 
-                                creating user-centric solutions for moms. As a tech enthusiast, 
-                                I stay updated with the latest trends and promise to deliver software that not only functions impeccably but also delights users with its design.
-                                Let's connect and explore the endless possibilities of technology together. 
-                            </p>
-                        </div>
-                    </div>
-                    <div class="about-sections">
-                        <div class="about-sections-contents animate">
-                            <h4>Anock Essimbiong Steve</h4>
-                            <p>
-                                I am a software engineer with a passion for building innovative solutions.
-                                I am proficient in Python, Django, MySQL and Linux and I have experience with a variety of web development frameworks.
-                                I am also a strong problem solver and I am always eager to learn new things.
-                                I am excited to be a part of the software engineering community
-                                and I am looking forward to making a positive impact on the world through my work.
-                                I am confident that my skills and passion will allow me to succeed in this field.
-                            </p>
-                        </div>
-                    </div>
+            <div class="about-sections">
+                <div class="about-sections-contents animate">
+                    <h4>Anock Essimbiong Steve</h4>
+                    <p>
+                        I am a software engineer with a passion for building innovative solutions.
+                        I am proficient in Python, Django, MySQL and Linux and I have experience with a variety of web development frameworks.
+                        I am also a strong problem solver and I am always eager to learn new things.
+                        I am excited to be a part of the software engineering community
+                        and I am looking forward to making a positive impact on the world through my work.
+                        I am confident that my skills and passion will allow me to succeed in this field.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
     <section id="services">
-        
+        <div class="services" style="background: url('{{ images[5] }}');">
+            <div class="services-content">
+                <h1>Get Started With FAMEC</h1>
+                <div class="form">
+                    <input type="text" placeholder="Enter your Email...">
+                    <a href="{{ url_for('auth.register') }}"><button type="submit">Register Here</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="services" style="background: url('{{ images[7] }}');">
+            <div class="services main"></div>
+            <div class="services main"></div>
+        </div>
+        <div class="services" style="background: url('{{ images[6] }}');"></div>
     </section>
     <section id="contact">
         <div class="contact-container">

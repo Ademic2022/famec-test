@@ -23,6 +23,7 @@ class User(UserMixin, BaseModel, Base):
         state = Column(String(30), nullable=False)
         zipcode = Column(Integer(), nullable=False)
         birthday = Column(String(10), nullable=True)
+        profile_img = Column(String(50), nullable=True, default='avatar.png')
         # Create a one-to-many relationship to the Task model
         tasks = relationship('Task', back_populates='user')
         # Create a many-to-one relationship to the User model to represent family owner

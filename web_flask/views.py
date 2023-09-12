@@ -1,13 +1,17 @@
-from flask import Blueprint, render_template, url_for, request, flash, redirect, jsonify
+from flask import Blueprint, render_template, url_for, request, flash, redirect, jsonify, current_app
 from flask_login import login_required, current_user
 from models import storage
 from models.task import Task
 from models.notification import Notification
 import json
-from werkzeug.routing import UUIDConverter
-from .context_processors import inject_globals
+from datetime import datetime
+import os
+import uuid
+from .app_methods import inject_globals, allowed_file
+
 
 views = Blueprint('views', __name__)
+
 @views.context_processor
 def inject_global():
     return inject_globals()
@@ -16,25 +20,15 @@ def inject_global():
 """Route to Landing PAGE"""
 @views.route('/')
 def landing_page():
-    background_image_urls = [
-        url_for('static', filename='images/home1.jpg'),
-        url_for('static', filename='images/home2.jpg'),
-        url_for('static', filename='images/home3.jpg'),
-        url_for('static', filename='images/famec_landn_1.jpg'),
-        url_for('static', filename='images/Famec_logo_white.png'),
-        url_for('static', filename='images/famec_landn_2.jpg'),
-        url_for('static', filename='images/famec_landn_3.jpg'),
-        url_for('static', filename='images/family.jpg')
-    ]
-    return render_template('landing_page.html', images = background_image_urls)
+    
+    return render_template('landing_page.html')
 
 @views.route('/dashboard')
 @login_required
 def dashboard():
-    # Assuming you have a datetime field named 'created_at' in your Task model
     user = current_user
-    user_tasks = user.tasks
-    recent_tasks = user_tasks[:3]  
+    tasks = storage.get_task(user.family_id)
+    recent_tasks = tasks
     
     return render_template('dashboard.html', user=user, recent_tasks=recent_tasks)
 
@@ -92,11 +86,10 @@ def tasks():
                     storage.new(notification)
 
             storage.save()
-                        
-
-
+                    
             flash('New Task added Successfully', category='success')
             return redirect(url_for('views.tasks'))
+    # get tasks associated with family members
     family_tasks = current_user.family.tasks
     return render_template('task.html', user = current_user, family_tasks=family_tasks)
 
@@ -128,11 +121,12 @@ def family():
 @views.route('/settings')
 @login_required
 def settings():
-    profile_image = [
-        url_for('static', filename='images/avatar.png')
-    ]
     user_family_id = current_user.family_id
     family_name = storage.find_family_name(user_family_id)
+    img_url = current_user.profile_img
+    profile_image = [
+        url_for('static', filename=f"uploads/{img_url}")
+    ]
     return render_template('settings.html', user = current_user, image=profile_image, family=family_name)
 
 @views.route('/delete-task', methods=['POST'])
@@ -160,7 +154,6 @@ def update_task(task_id):
     
     if not task:
         # Handle the case where the task doesn't exist or an error occurs
-        # You can return an error message or appropriate status code
         flash("Task not found or error fetching task", category='error')
         return redirect(url_for('views.tasks'))
     
@@ -172,7 +165,7 @@ def update_task(task_id):
         due_date = request.form.get('due_date')
         status = request.form.get('status')
         
-        # Convert the 'status' value to an integer
+        # Convert the 'status' and Priority value to an integer
         if status:
             status = 1
         else:
@@ -191,7 +184,7 @@ def update_task(task_id):
         task.priority = priority
         task.due_date = due_date
         task.status = status
-        
+        task.updated_at = datetime.utcnow()
         # Save the updated task
         storage.update(task)
         flash('Task updated Successfully', category='success')
@@ -208,3 +201,29 @@ def update_task(task_id):
     }
     
     return jsonify(task_data)
+
+@views.route("/uploads", methods=["POST"])
+def uploads():
+    if request.method == "POST" and "photo" in request.files:
+        photo = request.files["photo"]
+        if photo and allowed_file(photo.filename):
+            # Generate a unique filename
+            unique_filename = str(uuid.uuid4())[:8] + os.path.splitext(photo.filename)[-1]
+            # Save the uploaded file with the unique filename
+            file_path = current_app.config["UPLOADED_PHOTOS_DEST"]
+            if not os.path.exists(file_path):
+                os.makedirs(file_path)
+            photo_path = os.path.join(file_path, unique_filename)
+            photo.save(photo_path)
+
+            # Save the filename in the database
+            user_id = current_user.id
+            user = storage.find_user_by_id(user_id)  # Retrieve the user by ID
+            if user:
+                user.profile_img = unique_filename  # Update the profile_img field
+                storage.save()  # Commit changes
+                flash('Image successfully uploaded', category='success')
+                return redirect(url_for('views.settings'))
+        else:
+            flash('Image extension not allowed', category='error')
+    return redirect(url_for('views.settings'))

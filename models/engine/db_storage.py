@@ -21,12 +21,11 @@ class DBStorage:
         env = getenv('FAMEC_ENV')
 
         self.__engine = create_engine(
+            # f'mysql://ud6sirijm7wdl4f2:Xs9ZWyCFUdBM9txRCaCV@bgxgrxrrto5z8iklihyz-mysql.services.clever-cloud.com:3306/bgxgrxrrto5z8iklihyz',
             f'mysql+mysqldb://{user}:{db_password}@{host}/{database}',
             pool_pre_ping=True
         )
 
-        # if env == 'test':
-        #     Base.metadata.drop_all(self.__engine)
 
         if env == 'test':
             Base.metadata.drop_all(self.__engine)
@@ -99,14 +98,10 @@ class DBStorage:
         module = importlib.import_module('models.' + class_name.lower())
         # Get the class from the module
         cls = getattr(module, class_name)
-
         session = self.__create_session()
-        query = session.query(cls).filter_by(family_id=id).all()
-        
+        query = session.query(cls).filter_by(family_id=id, status=0).all()
         count = len(query)  # count the objects in the list
         return count
-
-
 
     def find_user_by_email(self, email):
         from models.user import User
@@ -134,7 +129,10 @@ class DBStorage:
     def get_task(self, id):
         from models.task import Task
         session = self.__create_session()
-        query = session.query(Task).filter_by(family_id=id).all()
+        query = session.query(Task).filter_by(
+            family_id=id,
+            status=0
+            ).order_by(Task.created_at.desc()).limit(3).all()
         return query
     
     def get_all_families(self, id):

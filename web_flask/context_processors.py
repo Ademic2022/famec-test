@@ -1,10 +1,11 @@
-from models import storage
-from flask_login import current_user
-
 # def inject_globals():
 #     task_counter = storage.count(Task)
 #     return {'task_counter': task_counter}
 def inject_globals():
+    from models import storage
+    from flask_login import current_user
+
+    
     if current_user.is_authenticated:
         task_counter = storage.count('Task', current_user.family_id)
     else:
